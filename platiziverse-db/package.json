@@ -1,0 +1,14 @@
+{
+  "name": "platiziverse-db",
+  "version": "1.0.0",
+  "description": "A simple plataforma de Iot Plataform - DB module",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard"
+  },
+  "author": "NRG",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}
