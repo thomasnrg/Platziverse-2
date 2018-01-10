@@ -1,13 +1,27 @@
 'use strict'
 
 const debug = require('debug')('platziverse:db:setup')
+const inquirer = require('inquirer')
+const chalk = require('chalk')
 const db = require('./')
 
+const prompt = inquirer.createPromptModule()
+
 async function setup () {
+  const answer = await prompt({
+    type: 'confirm',
+    name: 'setup',
+    message: 'this will destroy your database, are you sure?'
+  })
+
+  if (!answer.setup) {
+    return console.log('nothing happend')
+  }
+
   const config = {
     database: process.env.DB_NAME || 'platziverse',
-    username: process.env.DB_USERNAME || 'admin',
-    password: process.env.DB_PASSWORD || 'admin',
+    username: process.env.DB_USER || 'admin',
+    password: process.env.DB_PASS || 'admin',
     host: process.env.DB_HOST || 'localhost',
     dialect: 'postgres',
     logging: s => debug(s),
@@ -21,7 +35,7 @@ async function setup () {
 }
 
 function handleFatalError (err) {
-  console.log(err.message)
+  console.log(`${chalk.red('[fatal error ]')} ${err.message}`)
   console.log(err.stack)
   process.exit(1)
 }
